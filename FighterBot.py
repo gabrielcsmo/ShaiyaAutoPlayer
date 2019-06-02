@@ -35,7 +35,8 @@ class FighterBot(Bot):
 
     def __init__(self, resolution=(1920, 1080)):
         Bot.__init__(self)
-        self.name = "mage_bot"
+        self.name = "fighter_bot"
+        print("Created {}".format(self.name))
         self.killed_mobs = 0
         self.total_killed = 0
         self.resolution = resolution

@@ -35,6 +35,7 @@ class MageBot(Bot):
         self.name = "mage_bot"
         self.killed_mobs = 0
         self.total_killed = 0
+        print("Created {}".format(self.name))
 
     def rebuff(self):
         for i in xrange(MageBot.NUM_BUFFS):
