@@ -117,7 +117,7 @@ class FighterBot(Bot):
     def main_loop(self):
         self.start_time = time()
         self.current_time = 0
-        print self.start_time
+        print(self.start_time)
         pots = ['z', 'x']
         print("Waiting {} key to start. Stop it using the same key".format(FighterBot.STOP_KEY))
 

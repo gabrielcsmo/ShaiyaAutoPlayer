@@ -1,16 +1,17 @@
 from Bot import Bot
 import keyboard as kb
 from time import sleep
-from random import randint
+from random import randint, choice
 
 class MageBot(Bot):
 
     MIN_ATTACKS = 2
     MAX_ATTACKS = 3
 
-    SPELLS = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    #SPELLS = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+    SPELLS = {'arrow' : '1'}
 
-    AA_KEY = ['0']
+    AA_KEY = ['~']
     FW_KEY = ['w']
     BW_KEY = ['s']
     RIGHT_KEY = ['d']
@@ -23,10 +24,10 @@ class MageBot(Bot):
     STOP_KEY = 'Ctrl'
 
     NUM_BUFFS = 4
-    MIN_SPELL_DELAY = 150 # /100 to get number of seconds
-    MAX_SPELL_DELAY = 250 # /100 to get number of seconds
+    MIN_SPELL_DELAY = 35 # /100 to get number of seconds
+    MAX_SPELL_DELAY = 49 # /100 to get number of seconds
 
-    JUMP_PROBABILITY = 50 # in %
+    JUMP_PROBABILITY = 50 # in %`1`
     REST_TIME = 15 # in seconds
     REST_THRESHOLD = 1000 # in number of mobs killed
 
@@ -38,36 +39,64 @@ class MageBot(Bot):
         print("Created {}".format(self.name))
 
     def rebuff(self):
-        for i in xrange(MageBot.NUM_BUFFS):
-            sleep(3)
-            kb.press_and_release(MageBot.REBUFF_KEY)
+        for i in range(MageBot.NUM_BUFFS):
+            sleep(2)
+            kb.press(MageBot.REBUFF_KEY)
+            sleep(self.get_random_delay())
+            kb.release(MageBot.REBUFF_KEY)
+
+    def get_random_delay(self):
+        return randint(MageBot.MIN_SPELL_DELAY, MageBot.MAX_SPELL_DELAY) / 100.0
+
+    def press(self, k):
+        kb.press(k)
+        sleep(self.get_random_delay())
+        kb.release(k)
+        sleep(self.get_random_delay())
+    
+    def press_list(self, kl):
+        for k in kl:
+            kb.press(k)
+        sleep(self.get_random_delay())
+        
+        for k in kl:
+            kb.release(k)
+
+        sleep(self.get_random_delay())
 
     """
     Should write an heuristic for selecting next monster
     At this moment just auto the closest one
     """
     def select_next_monster(self):
-        kb.press_and_release(MageBot.AA_KEY)
-        sleep(0.25)
-        #kb.press_and_release(MageBot.BW_KEY)
+        self.press("F1")
+        
+        #move = choice(['q', 'e', 'w', 's'])
+        #self.press(move)
+        
+        self.press(MageBot.AA_KEY)
 
+    def magic_arrow(self):
+        self.press_list([MageBot.JUMP_KEY, MageBot.SPELLS['arrow']])
+        #self.press(MageBot.SPELLS['arrow'])
     """
     Should write an heuristic for using more spells.
     At this moment it is just MagicArrow.
     """
     def attack(self):
         num_attacks = randint(MageBot.MIN_ATTACKS, MageBot.MAX_ATTACKS)
-        print("Attacking {} times".format(num_attacks))
+        #print("Attacking {} times".format(num_attacks))
 
-        for i in xrange(num_attacks):
-            # jump with a givenprobability
+        for i in range(num_attacks):
+            # jump with a givenprobabilityw
             if randint(0, 100) < MageBot.JUMP_PROBABILITY:
                 kb.press_and_release(MageBot.JUMP_KEY)
 
-            kb.press_and_release(MageBot.SPELLS[0])
-            delay = randint(MageBot.MIN_SPELL_DELAY, MageBot.MAX_SPELL_DELAY) / 100.0
-            print("Wait {} until next attack".format(delay))
-            sleep(delay)
+            self.magic_arrow()
+
+            delay = self.get_random_delay()
+            #print("Wait {} until next attack".format(delay))
+            #sleep(delay)
         self.killed_mobs += 1
 
     def rest(self):
@@ -83,11 +112,11 @@ class MageBot(Bot):
         print("Waiting {} key to start. Stop using the same key".format(MageBot.STOP_KEY))
         kb.wait(MageBot.STOP_KEY)
 
-        for i in range(5):
-            print("Starting in {} sec...".format(5 - i))
+        for i in range(2):
+            print("Starting in {} sec...".format(2 - i))
             sleep(1)
 
-        self.rebuff()
+        #self.rebuff()
 
         self.killed_mobs = 0
         while True:
