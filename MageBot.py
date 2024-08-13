@@ -11,7 +11,7 @@ class MageBot(Bot):
     #SPELLS = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
     SPELLS = {'arrow' : '1'}
 
-    AA_KEY = ['~']
+    AA_KEY = ['`']
     FW_KEY = ['w']
     BW_KEY = ['s']
     RIGHT_KEY = ['d']
@@ -24,10 +24,10 @@ class MageBot(Bot):
     STOP_KEY = 'Ctrl'
 
     NUM_BUFFS = 4
-    MIN_SPELL_DELAY = 35 # /100 to get number of seconds
-    MAX_SPELL_DELAY = 49 # /100 to get number of seconds
+    MIN_SPELL_DELAY = 25 # /100 to get number of seconds
+    MAX_SPELL_DELAY = 32 # /100 to get number of seconds
 
-    JUMP_PROBABILITY = 50 # in %`1`
+    JUMP_PROBABILITY = 0 # in %`1`
     REST_TIME = 15 # in seconds
     REST_THRESHOLD = 1000 # in number of mobs killed
 
@@ -77,8 +77,8 @@ class MageBot(Bot):
         self.press(MageBot.AA_KEY)
 
     def magic_arrow(self):
-        self.press_list([MageBot.JUMP_KEY, MageBot.SPELLS['arrow']])
-        #self.press(MageBot.SPELLS['arrow'])
+        #self.press_list([MageBot.JUMP_KEY, MageBot.SPELLS['arrow']])
+        self.press(MageBot.SPELLS['arrow'])
     """
     Should write an heuristic for using more spells.
     At this moment it is just MagicArrow.

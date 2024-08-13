@@ -12,7 +12,7 @@ if __name__ == '__main__':
     if bot_type == "mage":
         bot = MageBot()
     elif bot_type == "fighter":
-        bot = FighterBot()
+        bot = FighterBot(resolution=(2560, 1440), skills_csv='fighter.csv')
     else:
         print("Choose between mage or fighter")
         sys.exit(1)

@@ -13,23 +13,26 @@ class ImgProcessor():
     TEXT_THRESHOLD = 150
 
     fragments = {
-        "HP1" : (21, 120, 139, 121),
+        "HP1" : (0, 0, 2560, 1440),
+        
+        "HP2" : (21, 120, 139, 121),
         "MP1" : (21, 125, 139, 126),
         "SP1" : (21, 135, 139, 136)
     }
 
     def __init__(self, resolution=(1920,1080)):
-        print("Image Processing module initialized")
+        print("- Image Processing module initialized")
         self.resolution = resolution
         self.coordinates = []
         self.boxes = {}
 
-    def grab_frame(self, box):
+    def grab_frame(self, box=[0,0, 2560, 1440]):
         im = ImageGrab.grab(bbox=box)
-        im2 = np.asanyarray(im)
-        screen = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
+        im.save("frame.png") 
+        #im2 = np.asanyarray(im)
+        #screen = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
         #screen = cv2.cvtColor(im2, cv2.COLOR_BGR2RGB)
-        return screen
+        #return screen
 
     def get_resources_status(self):
         """get all 3 type"""

@@ -1,0 +1,13 @@
+skill,description,cooldown,key,expires,type
+AA,Auto Attack,0,1,0,A
+DS,Deadly Strike,15,2,0,A
+WS,Wind Spin,10,3,0,A
+GS,Ground Shock,10,4,0,A
+WdS,Wide Shock,15,5,0,A
+EWS,Enchanced Wind Spin,15,6,0,A
+BS,Bastard Swing,15,7,0,A
+ST,Stinger,30,8,0,A
+BB,Bash Buff,0,[,3600,B
+C,Concentration,0,],3600,B
+L,Leadership,0,\,3600,B
+BE,Berserker,0,;,180,B
