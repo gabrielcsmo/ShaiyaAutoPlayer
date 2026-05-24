@@ -115,14 +115,22 @@ class FighterBot(Bot):
     At this moment it is just MagicArrow.
     """
     def attack(self):
+        
         auto_attack = self.skills[0]
-
+        
         for sk in self.skills:
             if sk.name == 'AA':
                 auto_attack = sk
             break
-    
-        auto_attack.use()
+
+        
+        for i in range(3):    
+            auto_attack.use()
+            sleep(0.5)
+        """
+        kb.press_and_release('F1')
+        sleep(0.5)
+        """
 
         """
         num_attacks = randint(FighterBot.MIN_ATTACKS, FighterBot.MAX_ATTACKS)
@@ -165,6 +173,7 @@ class FighterBot(Bot):
         self.sp = self.screen_hdl.get_res("SP", "1")
 
     def main_loop(self):
+        secs = 0
         print(f"Waiting {Constants.STOP_KEY} key to start. Stop it using the same key")
         kb.wait(Constants.STOP_KEY)
         sleep(1)
@@ -174,13 +183,24 @@ class FighterBot(Bot):
             if kb.is_pressed(Constants.STOP_KEY):
                 print("Successfully stopped.")
                 break
-            self.update_status()
 
-            self.rebuff()
+            if secs % 10 == 0:
+                kb.press_and_release("z")
+            if secs % 300 == 0:
+                kb.press_and_release("2")
+                sleep(0.5)
+                kb.press_and_release("3")
+                sleep(0.5)
+
             
-            self.select_next_monster()
+            #self.update_status()
+
+            #self.rebuff()
+            
+            #self.select_next_monster()
 
             self.attack()
+            secs += 1
         exit(0)
     
         """
